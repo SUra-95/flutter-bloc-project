@@ -7,7 +7,7 @@ class HomeProductWishlistButtonClickedEvent extends HomeEvent{
   
 }
 
-class HomeProductCarButtonClickedEvent extends HomeEvent{
+class HomeProductCartButtonClickedEvent extends HomeEvent{
   
 }
 
