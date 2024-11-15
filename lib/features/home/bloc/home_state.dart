@@ -15,7 +15,7 @@ class HomeLoadedSuccessState extends HomeState {
   HomeLoadedSuccessState({required this.products}); 
 }
 
-class HomeLoadedErrorState extends HomeState {}
+class HomeErrorState extends HomeState {}
 
 class HomeNavigateToWishlistPageActionState extends HomeActionState {}
 
