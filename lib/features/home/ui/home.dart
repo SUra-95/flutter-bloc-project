@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_example/features/cart/ui/cart.dart';
 import 'package:flutter_bloc_example/features/home/bloc/home_bloc.dart';
+import 'package:flutter_bloc_example/features/home/ui/product_tile_widget.dart';
 import 'package:flutter_bloc_example/features/wishlist/ui/wishlist.dart';
 
 class Home extends StatefulWidget {
@@ -44,41 +45,49 @@ class _HomeState extends State<Home> {
               ),
             );
           case HomeLoadedSuccessState:
+            final successState = state as HomeLoadedSuccessState;
             return Scaffold(
-              appBar: AppBar( 
-                centerTitle: true,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Flutter Bloc tutorial',
-                      style: TextStyle(color: Colors.white),
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Flutter Bloc tutorial',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                  backgroundColor: const Color.fromARGB(255, 96, 186, 221),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        homeBloc.add(HomeWishlistButtonNavigateEvent());
+                      },
+                      icon: Icon(Icons.favorite_border, color: Colors.white),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        homeBloc.add(HomeCartButtonNavigateEvent());
+                      },
+                      icon: Icon(Icons.shopping_cart_outlined,
+                          color: Colors.white),
                     ),
                   ],
                 ),
-                backgroundColor: const Color.fromARGB(255, 96, 186, 221),
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      homeBloc.add(HomeWishlistButtonNavigateEvent());
-                    },
-                    icon: Icon(Icons.favorite_border, color: Colors.white),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      homeBloc.add(HomeCartButtonNavigateEvent());
-                    },
-                    icon:
-                        Icon(Icons.shopping_cart_outlined, color: Colors.white),
-                  ),
-                ],
-              ),
-
-              body: // start from heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,
-            );
+                body: ListView.builder(
+                    itemCount: successState.products.length,
+                    itemBuilder: (context, index) {
+                      return ProductTileWidget(
+                          productDataModel: successState.products[index]);
+                    }));
 
           case HomeErrorState:
-            return Scaffold(body: Center(child: Text('Internal Server Error!'),),);
+            return Scaffold(
+              body: Center(
+                child: Text('Internal Server Error!'),
+              ),
+            );
 
           default:
             return SizedBox();

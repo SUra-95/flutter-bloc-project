@@ -2,13 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc_example/features/home/models/home_product_data_model.dart';
 
 class ProductTileWidget extends StatelessWidget {
-
   final ProductDataModel productDataModel;
 
   const ProductTileWidget({super.key, required this.productDataModel});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      margin: EdgeInsets.all(10),
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: Colors.black)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 200,
+            width: double.maxFinite,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(productDataModel.imageUrl),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            productDataModel.name,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Text(productDataModel.description),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Text(
+                "\$ " + productDataModel.price.toString(),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
