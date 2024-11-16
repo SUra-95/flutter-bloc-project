@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc_example/features/home/bloc/home_bloc.dart';
 import 'package:flutter_bloc_example/features/home/models/home_product_data_model.dart';
 
 class ProductTileWidget extends StatelessWidget {
   final ProductDataModel productDataModel;
+  final HomeBloc homeBloc;
 
-  const ProductTileWidget({super.key, required this.productDataModel});
+  const ProductTileWidget({super.key, required this.productDataModel, required this.homeBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +35,29 @@ class ProductTileWidget extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           Text(productDataModel.description),
-          const SizedBox(height: 20),
+          const SizedBox(height: 20), 
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 "\$ " + productDataModel.price.toString(),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              
+              Row(children: [
+                IconButton(
+                      onPressed: () {
+                        homeBloc.add(HomeProductWishlistButtonClickedEvent());
+                      },
+                      icon: Icon(Icons.favorite_border, color: Colors.black),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        homeBloc.add(HomeProductCartButtonClickedEvent());
+                      },
+                      icon: Icon(Icons.shopping_cart_outlined,
+                          color: Colors.black),
+                    ),
+              ]),
             ],
           ),
         ],
