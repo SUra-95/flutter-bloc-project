@@ -44,9 +44,7 @@ class _CartState extends State<Cart> {
                       return CartTileWidget(
                           cartBloc: cartBloc,                        
                           productDataModel: successState.cartItems[index]);
-                    });
-              
-              break;
+                    });              
             default:
           }
           return Container();
